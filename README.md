@@ -8,19 +8,36 @@ BOSS is a local web application I built to fix how I study. Instead of scattered
 
 It's not a todo app. It's an operating system for your brain.
 
+## Screenshots
+
+![Dashboard](uploads/Screenshot%20(629).png)
+
 ## Features
 
-### ⚔️ DSA Story Forge
-Log every problem as a battle. Capture your thinking process, where you got stuck, the aha moment, and a real-world connection. Not just code — the full story.
+### 📊 Dashboard
+Daily readiness score, exam countdown, subject progress, and topic completion tracking across all subjects.
+
+![CGPA Engine](uploads/Screenshot%20(630).png)
 
 ### 📈 CGPA Intelligence Engine
 First-principles CGPA analysis. Applies the Pareto 80/20 rule to show exactly which subjects control your grade and where to focus.
 
-### 📚 The Codex
-A personal knowledge log with spaced repetition. Every concept you learn gets a structured entry. Mastery score tracks how well you actually retained it.
+![DSA Forge](uploads/Screenshot%20(631).png)
+
+### ⚔️ DSA Story Forge
+Log every problem as a battle. Capture your thinking process, where you got stuck, the aha moment, and a real-world connection. Not just code — the full story.
+
+![Neural Chamber](uploads/Screenshot%20(632).png)
 
 ### 🧠 Neural Chamber
 Capture ideas the moment they appear. Masonry grid, brain map view, and a "Learn This" pipeline that sends ideas directly into The Codex.
+
+![The Codex](uploads/Screenshot%20(633).png)
+
+### 📚 The Codex
+A personal knowledge log with spaced repetition. Every concept you learn gets a structured entry. Mastery score tracks how well you actually retained it.
+
+![Study Room](uploads/Screenshot%20(634).png)
 
 ### 🤖 Study Room
 AI-powered study modes via Groq:
@@ -28,9 +45,6 @@ AI-powered study modes via Groq:
 - **Quiz** — tests your understanding
 - **Boss Fight** — aggressive recall challenge
 - **Story** — concept explained as a narrative
-
-### 📊 Dashboard
-Daily readiness score, exam countdown, subject progress, and topic completion tracking.
 
 ## Tech Stack
 
