@@ -1,0 +1,20 @@
+{
+  "name": "boss-study-os",
+  "version": "1.0.0",
+  "description": "BOSS Study OS — Intake Agent scripts",
+  "private": true,
+  "scripts": {
+    "analyze": "node scripts/analyze.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "groq-sdk": "^1.1.2"
+  },
+  "main": "test.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

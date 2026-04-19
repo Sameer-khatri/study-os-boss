@@ -1,0 +1,208 @@
+/* CGPA Intelligence Engine Styles */
+
+/* Hero Credit Map */
+.credit-map-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.credit-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.credit-bar-label {
+  width: 80px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+}
+
+.credit-bar-wrapper {
+  flex-grow: 1;
+  height: 12px;
+  background-color: var(--color-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.credit-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.4s ease;
+}
+
+.credit-bar-value {
+  width: 140px;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* Tier Colors */
+.tier-critical { background-color: var(--color-danger); }
+.tier-high { background-color: var(--color-warning); }
+.tier-medium { background-color: #eab308; /* Yellow */ }
+.tier-low { background-color: var(--text-muted); }
+
+/* Pareto Zone Layout */
+.pareto-container {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.pareto-zone-vital {
+  flex: 3; /* 60% approx */
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-card);
+  padding: 1.5rem;
+  background: rgba(37, 99, 235, 0.03);
+}
+
+.pareto-zone-trivial {
+  flex: 2; /* 40% approx */
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 1.5rem;
+  background: var(--bg-sidebar);
+}
+
+/* Subject Inputs */
+.subject-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr 1fr auto;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  align-items: center;
+}
+
+.subject-row input, .subject-row select {
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  font-size: 0.875rem;
+  width: 100%;
+  background: var(--bg-body);
+  color: var(--text-primary);
+}
+
+.subject-row input:focus, .subject-row select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.remove-row-btn {
+  background: none;
+  border: none;
+  color: var(--color-danger);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+.remove-row-btn:hover {
+  background: rgba(220, 38, 38, 0.1);
+}
+
+/* Simulator Sliders */
+.sim-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 60px 80px 80px;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sim-row:last-child {
+  border-bottom: none;
+}
+
+.sim-slider {
+  width: 100%;
+  accent-color: var(--color-primary);
+}
+
+.sim-cgpa-display {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+  text-align: center;
+  margin: 1rem 0;
+  transition: color 0.3s;
+}
+
+.sim-cgpa-grade {
+  text-align: center;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* Grade Colors */
+.cgpa-excellent { color: var(--color-success); }
+.cgpa-good { color: var(--color-primary); }
+.cgpa-average { color: var(--color-warning); }
+.cgpa-poor { color: var(--color-danger); }
+
+/* Subject Cards */
+.cgpa-subject-card {
+  background: var(--bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.cgpa-subject-card.tier-border-critical { border-left: 4px solid var(--color-danger); }
+.cgpa-subject-card.tier-border-high { border-left: 4px solid var(--color-warning); }
+.cgpa-subject-card.tier-border-medium { border-left: 4px solid #eab308; }
+.cgpa-subject-card.tier-border-low { border-left: 4px solid var(--text-muted); }
+
+.marks-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.875rem;
+}
+
+.marks-table th, .marks-table td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.marks-table th {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.action-plan-item {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-btn);
+  margin-bottom: 0.75rem;
+  background: var(--bg-card);
+}
+
+.action-rank {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  opacity: 0.8;
+}
+
+.insight-callout {
+  background: rgba(37, 99, 235, 0.05);
+  border-left: 4px solid var(--color-primary);
+  padding: 1rem;
+  border-radius: 4px;
+  font-style: italic;
+  margin-top: 1rem;
+  color: var(--text-primary);
+}

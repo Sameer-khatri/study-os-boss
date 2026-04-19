@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Study OS - BOSS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<script src="data/subjects.js"></script>
+<script src="data/progress.js"></script>
+<link rel="stylesheet" href="css/cgpa.css">
+<link rel="stylesheet" href="css/dsa.css">
+<link rel="stylesheet" href="css/ideas.css">
+<link rel="stylesheet" href="css/knowledge.css">
+<!-- Fonts: Syne, Space Grotesk, Playfair Display, Space Mono -->
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<!-- highlight.js for code syntax -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<style>
+  :root {
+    --bg-body: #ffffff;
+    --bg-sidebar: #f9fafb;
+    --bg-card: #ffffff;
+    --color-border: #e5e7eb;
+    --color-primary: #2563eb;
+    --color-primary-hover: #1d4ed8;
+    --color-success: #16a34a;
+    --color-warning: #d97706;
+    --color-danger: #dc2626;
+    --text-primary: #111827;
+    --text-muted: #6b7280;
+    --radius-card: 10px;
+    --radius-btn: 8px;
+    --shadow-card: 0 1px 3px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+  body { background-color: var(--bg-body); color: var(--text-primary); display: flex; height: 100vh; overflow: hidden; }
+
+  /* Utilities */
+  .flex { display: flex; }
+  .items-center { align-items: center; }
+  .justify-between { justify-content: space-between; }
+  .justify-center { justify-content: center; }
+  .gap-2 { gap: 0.5rem; }
+  .gap-4 { gap: 1rem; }
+  .gap-6 { gap: 1.5rem; }
+  .p-6 { padding: 1.5rem; }
+  .mb-2 { margin-bottom: 0.5rem; }
+  .mb-4 { margin-bottom: 1rem; }
+  .mb-6 { margin-bottom: 1.5rem; }
+  .mt-4 { margin-top: 1rem; }
+  .text-muted { color: var(--text-muted); }
+  .text-sm { font-size: 0.875rem; }
+  .text-lg { font-size: 1.125rem; }
+  .text-xl { font-size: 1.25rem; }
+  .font-bold { font-weight: 700; }
+  .font-semibold { font-weight: 600; }
+  .grid { display: grid; }
+  .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+  /* Buttons & Badges */
+  .btn { padding: 0.5rem 1rem; border-radius: var(--radius-btn); border: none; cursor: pointer; font-weight: 500; font-size: 0.875rem; transition: background 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-primary { background-color: var(--color-primary); color: white; }
+  .btn-primary:hover { background-color: var(--color-primary-hover); }
+  .btn-outline { background-color: transparent; border: 1px solid var(--color-border); color: var(--text-primary); }
+  .btn-outline:hover { background-color: #f3f4f6; }
+  .badge { padding: 0.25rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; display: inline-block; }
+  .badge-blue { background-color: #dbeafe; color: #1e40af; }
+  .badge-red { background-color: #fee2e2; color: #991b1b; }
+  .badge-green { background-color: #dcfce7; color: #166534; }
+  .badge-amber { background-color: #fef3c7; color: #92400e; }
+
+  /* Sidebar */
+  .sidebar { width: 240px; background-color: var(--bg-sidebar); border-right: 1px solid var(--color-border); display: flex; flex-direction: column; padding: 1.5rem; flex-shrink: 0; }
+  .logo-area { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 2rem; font-size: 1.25rem; font-weight: 700; }
+  .nav-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem; border-radius: var(--radius-btn); cursor: pointer; color: var(--text-muted); font-weight: 500; transition: all 0.2s; margin-bottom: 0.25rem; }
+  .nav-item:hover, .nav-item.active { background-color: #eff6ff; color: var(--color-primary); }
+  .sidebar-divider { height: 1px; background-color: var(--color-border); margin: 1.5rem 0; }
+  .countdown { margin-top: auto; text-align: center; padding-top: 1rem; }
+  .countdown-num { font-size: 2.5rem; font-weight: 700; line-height: 1; }
+  .subject-quick-list { margin-top: 1.5rem; font-size: 0.875rem; color: var(--text-muted); }
+  .quick-item { display: flex; align-items: center; justify-content: space-between; margin-top: 0.5rem; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* Main Area */
+  .main-content { flex-grow: 1; overflow-y: auto; padding: 2rem 3rem; background: var(--bg-body); position: relative; }
+  .screen { display: none; animation: fadeIn 0.2s ease-in-out; }
+  .screen.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Cards */
+  .card { background: var(--bg-card); border-radius: var(--radius-card); border: 1px solid var(--color-border); box-shadow: var(--shadow-card); padding: 1.5rem; }
+  .stat-value { font-size: 2rem; font-weight: 700; margin-top: 0.5rem; }
+  
+  .subject-card { display: flex; flex-direction: column; justify-content: space-between; border-left: 4px solid var(--color-primary); }
+  .progress-bar-container { height: 6px; background-color: #f3f4f6; border-radius: 3px; overflow: hidden; margin: 1rem 0; }
+  .progress-bar-fill { height: 100%; background-color: var(--color-primary); width: 0%; transition: width 0.3s; }
+  
+  /* Subject View */
+  .upload-zone { border: 2px dashed var(--color-border); border-radius: var(--radius-card); padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.2s; color: var(--text-muted); }
+  .upload-zone:hover { border-color: var(--color-primary); color: var(--color-primary); background: #eff6ff; }
+  .topic-row { display: flex; align-items: center; justify-content: space-between; padding: 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-btn); margin-bottom: 0.5rem; }
+  
+  .progress-circle { width: 120px; height: 120px; border-radius: 50%; background: conic-gradient(var(--color-primary) 0%, #f3f4f6 0); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; }
+  .progress-inner { width: 100px; height: 100px; border-radius: 50%; background: white; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 700; }
+
+  /* Study Room */
+  .tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .tab { padding: 0.5rem 1rem; border-radius: 999px; cursor: pointer; font-weight: 500; font-size: 0.875rem; color: var(--text-muted); background: white; border: 1px solid var(--color-border); transition: all 0.2s; }
+  .tab.active { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+  .tab:hover:not(.active) { background: #eff6ff; color: var(--color-primary); }
+  
+  .study-area { min-height: 400px; display: flex; flex-direction: column; }
+  .study-content { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  
+  .boss-bars { width: 100%; max-width: 500px; font-family: monospace; text-align: left; background: #111827; color: #10b981; padding: 1rem; border-radius: 8px; margin-bottom: 2rem; white-space: pre; transition: box-shadow 0.2s; }
+  
+  .chat-box { flex-grow: 1; width: 100%; max-width: 100%; display: block; overflow-y: auto; text-align: left; padding-bottom: 1rem; display: none; overflow-wrap: break-word; }
+  .msg { width: 100%; border-radius: var(--radius-card); margin-bottom: 1rem; }
+  .msg.agent { background: #f3f4f6; color: var(--text-primary); align-self: flex-start; border-bottom-left-radius: 2px; white-space: pre-wrap; word-wrap: break-word; word-break: break-word; line-height: 1.8; font-size: 15px; padding: 20px; font-family: Inter, sans-serif; display: block; }
+  .msg.student { background: var(--color-primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; font-size: 15px; padding: 15px 20px; display: block; margin-left: auto; max-width: 90%; }
+
+  .chat-input { display: flex; gap: 0.5rem; width: 100%; border-top: 1px solid var(--color-border); padding-top: 1rem; margin-top: auto; display: none; }
+  .chat-input input { flex-grow: 1; padding: 0.75rem 1rem; border: 1px solid var(--color-border); border-radius: var(--radius-btn); font-size: 1rem; outline: none; }
+  .chat-input input:focus { border-color: var(--color-primary); box-shadow: 0 0 0 2px #dbeafe; }
+  .chat-input button { background: var(--color-primary); color: white; border: none; padding: 0.75rem 1.25rem; border-radius: var(--radius-btn); cursor: pointer; }
+
+  /* Progress Page */
+  .progress-table { width: 100%; border-collapse: collapse; margin-bottom: 2rem; }
+  .progress-table th, .progress-table td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--color-border); }
+  .progress-table th { color: var(--text-muted); font-weight: 500; font-size: 0.875rem; text-transform: uppercase; }
+  .contrib-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; border: 1px solid var(--color-border); padding: 1rem; border-radius: var(--radius-card); }
+  .contrib-cell { aspect-ratio: 1; border-radius: 2px; background: #f3f4f6; }
+
+  /* Utilities */
+  .spinner { display: inline-block; width: 18px; height: 18px; border: 2px solid #dbeafe; border-top-color: var(--color-primary); border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 6px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  
+  /* Modals and Toasts */
+  #diag-modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:999; align-items:center; justify-content:center; }
+  #diag-modal-inner { background:white; border-radius:10px; width:100%; max-width:540px; max-height:90vh; overflow-y:auto; position:relative; }
+  #toast { display:none; position:fixed; bottom:20px; right:20px; background:#1f2937; color:white; padding:1rem; border-radius:8px; z-index:1000; box-shadow:0 10px 15px -3px rgba(0,0,0,0.1); }
+</style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="logo-area">
+      Study OS <span class="badge badge-blue">BOSS</span>
+    </div>
+    <div class="text-sm text-muted mb-6 font-semibold" id="semester-info">
+      Sem 4, Year 2
+    </div>
+
+    <div class="nav-item active" onclick="nav('dashboard')">
+      <i data-lucide="home"></i> Dashboard
+    </div>
+    <div class="nav-item" onclick="nav('dashboard')">
+      <i data-lucide="book"></i> Subjects
+    </div>
+    <div class="nav-item" onclick="nav('progress')">
+      <i data-lucide="bar-chart-2"></i> Progress
+    </div>
+    <div class="nav-item" onclick="nav('cgpa')">
+      <i data-lucide="calculator"></i> CGPA Engine
+    </div>
+    <div class="nav-item" onclick="nav('dsa')">
+      <span style="font-size:1rem;">⚔️</span> DSA Forge
+    </div>
+    <div class="nav-item" onclick="openIdeasVault()">
+      <span style="font-size:1rem;">🧠</span> Ideas Vault
+    </div>
+    <div class="nav-item" onclick="openKnowledgeLog()">
+      <span style="font-size:1rem;">📚</span> The Codex
+    </div>
+    <div class="nav-item" onclick="nav('study', 'TOC', 'Select a topic', 'teach')">
+      <i data-lucide="zap"></i> Study Room
+    </div>
+
+    <div class="sidebar-divider"></div>
+
+    <div class="countdown">
+      <div class="countdown-num" id="days-left">30</div>
+      <div class="text-muted text-sm mt-1">days to exam</div>
+    </div>
+
+    <div class="subject-quick-list" id="sidebar-subjects">
+      <!-- Injected by JS -->
+    </div>
+    
+    <div class="sidebar-divider"></div>
+    <div id="status-indicator" onclick="openDiagnostics()" style="display:flex;align-items:center;gap:0.5rem;cursor:pointer;font-size:0.875rem;color:var(--text-muted);font-weight:600;">
+      <div class="dot" id="status-dot" style="background:#f3f4f6;"></div> System Status
+    </div>
+  </aside>
+
+  <main class="main-content">
+    
+    <!-- Screen 1: Dashboard -->
+    <div id="dashboard-screen" class="screen active">
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-xl font-bold">Good morning, let's get to work.</h1>
+        <div class="flex items-center gap-4">
+          <button class="btn btn-outline" style="font-size:0.75rem;padding:0.25rem 0.5rem;" onclick="openDiagnostics()">Run Diagnostics</button>
+          <div class="text-muted" id="current-date"></div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-4 gap-4 mb-6">
+        <div class="card">
+          <div class="text-muted text-sm font-semibold" style="text-transform: uppercase;">Readiness</div>
+          <div class="stat-value" id="stat-readiness">0%</div>
+        </div>
+        <div class="card">
+          <div class="text-muted text-sm font-semibold" style="text-transform: uppercase;">Topics Done</div>
+          <div class="stat-value" id="stat-topics">0/0</div>
+        </div>
+        <div class="card">
+          <div class="text-muted text-sm font-semibold" style="text-transform: uppercase;">Days Left</div>
+          <div class="stat-value" id="stat-days">30</div>
+        </div>
+        <div class="card">
+          <div class="text-muted text-sm font-semibold" style="text-transform: uppercase;">Subjects</div>
+          <div class="stat-value" id="stat-subCount">5</div>
+        </div>
+      </div>
+
+      <h2 class="text-lg font-bold mb-4 mt-8">Your Subjects</h2>
+      <div class="grid grid-cols-2 gap-4" id="dashboard-subjects">
+        <!-- Injected by JS -->
+      </div>
+    </div>
+
+    <!-- Screen 2: Subject View -->
+    <div id="subject-screen" class="screen">
+      <div class="text-muted text-sm mb-4 breadcrumb">
+        Dashboard > <span id="subj-breadcrumb" class="font-bold" style="color: var(--color-primary);">Subject</span>
+      </div>
+      
+      <div class="flex items-center gap-4 mb-6">
+        <h1 class="text-xl font-bold" id="subj-title">Subject Name</h1>
+        <span class="badge badge-blue" id="subj-badge">SHORT</span>
+      </div>
+
+      <div class="grid" style="grid-template-columns: 3fr 2fr; gap: 2rem;">
+        
+        <div>
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-bold flex items-center gap-2">Topics <span class="badge badge-blue" id="subj-topic-count">0</span></h2>
+          </div>
+          
+          <div id="subj-topics-list">
+            <div class="card text-center text-muted py-8">
+              Select a subject to view topics
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card mb-4 text-center">
+            <h3 class="font-semibold mb-4 text-left">Subject Progress</h3>
+            <div class="progress-circle" id="subj-circle">
+              <div class="progress-inner" id="subj-circle-text">0%</div>
+            </div>
+            <div class="flex justify-between text-sm">
+              <div><span class="font-bold" style="color: var(--color-success);" id="subj-done-count">0</span> Done</div>
+              <div><span class="font-bold" style="color: var(--color-warning);" id="subj-pend-count">0</span> Pending</div>
+              <div><span class="font-bold text-muted">0</span> Skipped</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Screen 3: Study Room -->
+    <div id="study-screen" class="screen">
+      <div class="text-muted text-sm mb-4 breadcrumb">
+        Dashboard > <span id="study-subj-name">TOC</span> > <span class="font-bold" style="color: var(--color-primary);" id="study-topic-name">Topic</span>
+      </div>
+
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-xl font-bold flex items-center gap-2">
+          Study Room <span class="badge badge-blue" id="study-badge">TOC</span>
+        </h1>
+      </div>
+
+      <div class="tabs" id="study-tabs">
+        <div class="tab" onclick="setMode('teach')">Teach</div>
+        <div class="tab" onclick="setMode('quiz')">Quiz</div>
+        <div class="tab" onclick="setMode('boss')">Boss Fight</div>
+        <div class="tab" onclick="setMode('story')">Story</div>
+      </div>
+
+      <div class="card study-area p-6">
+        <div class="study-content" id="study-placeholder">
+          <h2 class="text-lg font-semibold mb-2" id="study-msg">Click Start to begin learning.</h2>
+          <div id="study-boss-ui" style="display:none; width: 100%; display: flex; justify-content: center;">
+            <div class="boss-bars" id="boss-hp-container"></div>
+          </div>
+          <button class="btn btn-primary mt-4" id="btn-start-study" onclick="startSession()">Start Session</button>
+        </div>
+
+        <div class="chat-box" id="study-chat"></div>
+
+        <div class="chat-input" id="study-input">
+          <input type="text" id="chat-msg" placeholder="Type your answer..." onkeypress="handleEnter(event)">
+          <button onclick="submitInput()"><i data-lucide="send" style="width:16px;height:16px;"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 5: CGPA Intelligence Engine -->
+    <div id="cgpa-screen" class="screen">
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <h1 class="text-xl font-bold">CGPA Intelligence Engine</h1>
+          <p class="text-muted text-sm">Strategic grade planning & Pareto analysis</p>
+        </div>
+        <button class="btn btn-primary" onclick="toggleCgpaSetup()" id="btn-back-to-setup" style="display:none;">
+          <i data-lucide="settings"></i> Edit Subjects
+        </button>
+      </div>
+
+      <!-- Setup Sub-screen -->
+      <div id="cgpa-setup">
+        <div class="card mb-6">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-bold">Subject Input</h2>
+            <div class="flex gap-2">
+              <button class="btn btn-outline" onclick="useCurrentSemester()">
+                <i data-lucide="refresh-cw"></i> Use My Current Semester
+              </button>
+              <button class="btn btn-outline" onclick="addSubjectRow()">
+                <i data-lucide="plus"></i> Add Subject
+              </button>
+            </div>
+          </div>
+          
+          <div id="cgpa-subjects-input" class="mb-4">
+            <!-- Injected by JS -->
+          </div>
+
+          <div class="flex justify-center mt-6">
+            <button class="btn btn-primary" style="padding: 1rem 3rem; font-size: 1.125rem;" onclick="analyzeCGPA()">
+              Analyze My CGPA &rarr;
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Sub-screen -->
+      <div id="cgpa-dashboard" style="display:none;">
+        <div class="card mb-6" style="background: var(--bg-sidebar); border-left: 4px solid var(--color-primary);">
+          <div id="cgpa-headline" class="font-bold text-lg">
+            Calculating your strategic impact...
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-6 mb-6">
+          <div class="card">
+            <h3 class="font-bold mb-4">Credit Weight Map</h3>
+            <div id="cgpa-credit-map" class="credit-map-container">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+          
+          <div class="card">
+            <h3 class="font-bold mb-4">CGPA Simulator</h3>
+            <div class="sim-cgpa-display" id="cgpa-live-display">0.00/10</div>
+            <div class="sim-cgpa-grade" id="cgpa-live-grade">Grade: - | Scenario: Realistic</div>
+            
+            <div class="flex justify-center gap-2 my-4">
+              <button class="btn btn-outline text-xs" onclick="setScenario('Pessimistic')">Pessimistic</button>
+              <button class="btn btn-outline text-xs" onclick="setScenario('Realistic')">Realistic</button>
+              <button class="btn btn-outline text-xs" onclick="setScenario('Target 9.0')">Target 9.0+</button>
+            </div>
+
+            <div id="cgpa-sim-sliders" class="mt-4">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+        </div>
+
+        <div class="card mb-6">
+          <h3 class="font-bold mb-4">Pareto Analysis (80/20 Rule)</h3>
+          <div class="pareto-container">
+            <div class="pareto-zone-vital" id="cgpa-pareto-vital">
+              <!-- Injected by JS -->
+            </div>
+            <div class="pareto-zone-trivial" id="cgpa-pareto-trivial">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+          <div class="insight-callout" style="margin-top: 1rem; font-size: 0.875rem;">
+            <strong>Pro Tip:</strong> Focus 80% of your effort on the "Vital Few" subjects. They control your CGPA. Labs and minor subjects are "The Trivial Many" — secure them quickly and move on.
+          </div>
+        </div>
+
+        <h3 class="font-bold mb-4">Subject-Level Breakdown</h3>
+        <div id="cgpa-detailed-cards">
+          <!-- Injected by JS -->
+        </div>
+
+        <div class="card mt-6">
+          <h3 class="font-bold mb-4">Strategic Action Plan</h3>
+          <div id="cgpa-action-plan">
+            <!-- Injected by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ⚔️ Screen: DSA Story Forge -->
+    <div id="dsa-screen" class="screen">
+
+      <!-- Sub-screen: War Room -->
+      <div id="dsa-war-room" class="dsa-subscreen">
+        <div class="dsa-header">
+          <div>
+            <div style="font-size:0.85rem;color:var(--dsa-muted);margin-bottom:2px;">Good morning, let's forge something.</div>
+            <h1>DSA Story Forge</h1>
+            <p>Your personal problem journal. Every battle documented.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
+            <div class="dsa-date" id="dsa-war-room-date"></div>
+            <div class="dsa-streak-badge">🔥 <span id="dsa-stat-streak">0d</span> war streak</div>
+          </div>
+        </div>
+
+        <!-- Stat Cards -->
+        <div class="dsa-stats-row">
+          <div class="dsa-stat-card">
+            <div class="dsa-stat-label">Problems Solved</div>
+            <div class="dsa-stat-value" id="dsa-stat-solved">0</div>
+          </div>
+          <div class="dsa-stat-card">
+            <div class="dsa-stat-label">Warriors (solo wins)</div>
+            <div class="dsa-stat-value" id="dsa-stat-warriors">0</div>
+          </div>
+          <div class="dsa-stat-card">
+            <div class="dsa-stat-label">Patterns Covered</div>
+            <div class="dsa-stat-value" id="dsa-stat-patterns">0/22</div>
+          </div>
+          <div class="dsa-stat-card">
+            <div class="dsa-stat-label">War Streak</div>
+            <div class="dsa-stat-value" id="dsa-stat-streak-card" style="font-size:1.5rem;">🔥 0d</div>
+          </div>
+        </div>
+
+        <!-- Revision Due -->
+        <div class="dsa-revision-card">
+          <div class="dsa-revision-header">
+            ⏰ DUE FOR REVISION <span id="dsa-revision-count" style="background:rgba(234,179,8,0.2);padding:2px 8px;border-radius:999px;">0</span>
+            <span style="margin-left:auto;font-size:0.75rem;color:var(--dsa-muted);font-weight:400;">This enemy is returning. Are you ready?</span>
+          </div>
+          <div id="dsa-revision-due-list"></div>
+        </div>
+
+        <!-- Action Row -->
+        <div class="dsa-action-row">
+          <button class="dsa-btn dsa-btn-primary" onclick="dsaNav('forge')">+ Log New Battle</button>
+          <button class="dsa-btn dsa-btn-ghost" onclick="dsaNav('scroll')">🔍 Search Problems</button>
+          <button class="dsa-btn dsa-btn-ghost" onclick="dsaNav('arena')">🗺️ Pattern Arena</button>
+        </div>
+
+        <!-- Two-column: Pattern Grid + Recent Battles -->
+        <div class="dsa-grid-2 dsa-mb-4" style="align-items:start;">
+          <div class="dsa-card">
+            <div class="dsa-section-title">Pattern Strength Grid</div>
+            <div id="dsa-pattern-grid-content" class="dsa-pattern-grid"></div>
+          </div>
+          <div class="dsa-card">
+            <div class="dsa-section-title">Recent Battles</div>
+            <div id="dsa-recent-battles" class="dsa-recent-list"></div>
+          </div>
+        </div>
+
+        <!-- Badges -->
+        <div class="dsa-card">
+          <div class="dsa-section-title">Achievements Unlocked</div>
+          <div id="dsa-earned-badges" class="dsa-earned-badges"></div>
+        </div>
+      </div>
+
+      <!-- Sub-screen: The Forge -->
+      <div id="dsa-forge" class="dsa-subscreen">
+        <div id="dsa-forge-content"></div>
+      </div>
+
+      <!-- Sub-screen: The Scroll -->
+      <div id="dsa-scroll" class="dsa-subscreen">
+        <div class="dsa-header">
+          <div>
+            <h1>📜 The Scroll</h1>
+            <p>Your complete battle library.</p>
+          </div>
+          <button class="dsa-btn dsa-btn-primary" onclick="dsaNav('forge')">+ Log New Battle</button>
+        </div>
+        <div id="dsa-scroll-content"></div>
+      </div>
+
+      <!-- Sub-screen: Story View -->
+      <div id="dsa-story-view" class="dsa-subscreen">
+        <div id="dsa-story-content"></div>
+      </div>
+
+      <!-- Sub-screen: Arena -->
+      <div id="dsa-arena" class="dsa-subscreen">
+        <div id="dsa-arena-content"></div>
+      </div>
+
+    </div>
+    <!-- /DSA Screen -->
+
+  </main>
+
+  <div id="diag-modal">
+    <div id="diag-modal-inner">
+      <button onclick="closeDiagnostics()" style="position:absolute;top:15px;right:20px;background:none;border:none;font-size:1.5rem;cursor:pointer;">&times;</button>
+      <div id="diag-content" style="padding: 20px;"></div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <!-- DSA Modal Overlay -->
+  <div id="dsa-modal-overlay">
+    <div id="dsa-modal-box"></div>
+  </div>
+
+  <!-- DSA Toast -->
+  <div id="dsa-toast"></div>
+
+<script>
+let currentSubject = "";
+let currentTopic = "";
+let currentMode = "teach";
+
+let currentQuizState = null;
+let currentBossState = null;
+
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.style.display = 'block';
+  setTimeout(() => el.style.display = 'none', 3000);
+}
+
+async function openDiagnostics() {
+  document.getElementById('diag-modal').style.display = 'flex';
+  document.getElementById('diag-content').innerHTML = '<div style="padding:40px;text-align:center;"><div class="spinner"></div> Running diagnostics...</div>';
+  if(typeof showDiagnosticReport === 'function') {
+    const html = await showDiagnosticReport();
+    document.getElementById('diag-content').innerHTML = html;
+  } else {
+    document.getElementById('diag-content').innerHTML = '<span style="color:red">Diagnostics function missing!</span>';
+  }
+}
+
+function closeDiagnostics() {
+  document.getElementById('diag-modal').style.display = 'none';
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  lucide.createIcons();
+  
+  const d = new Date();
+  document.getElementById("current-date").textContent = d.toLocaleDateString('en-US', { weekday: 'long', month: 'short', day: 'numeric' });
+  
+  const diffDays = 30;
+  const daysEl = document.getElementById("days-left");
+  daysEl.textContent = diffDays;
+  document.getElementById("stat-days").textContent = diffDays;
+  daysEl.style.color = "var(--color-success)";
+
+  document.getElementById("semester-info").textContent = "Sem 4, Year 2";
+  
+  renderDashboard();
+  renderSidebar();
+  renderProgressPage();
+  
+  // Background Diagnostics
+  if(typeof runDiagnostics === 'function') {
+    runDiagnostics().then(res => {
+      const dot = document.getElementById('status-dot');
+      if(res && res.failed > 0) {
+        dot.style.background = 'var(--color-danger)';
+        showToast("⚠️ System issue detected. Click status dot for details.");
+      } else {
+        dot.style.background = 'var(--color-success)';
+      }
+    });
+  }
+});
+
+function nav(screenId, subjShort = null, topicName = null, mode = null) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(`${screenId}-screen`).classList.add('active');
+  
+  document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+  if (screenId === 'dashboard') document.querySelectorAll('.nav-item')[0].classList.add('active');
+  if (screenId === 'subject')   document.querySelectorAll('.nav-item')[1].classList.add('active');
+  if (screenId === 'progress')  document.querySelectorAll('.nav-item')[2].classList.add('active');
+  if (screenId === 'cgpa')      document.querySelectorAll('.nav-item')[3].classList.add('active');
+  if (screenId === 'dsa')       document.querySelectorAll('.nav-item')[4].classList.add('active');
+  if (screenId === 'study')     document.querySelectorAll('.nav-item')[5].classList.add('active');
+
+  if (subjShort) currentSubject = subjShort;
+  if (topicName) currentTopic = topicName;
+  if (mode) setMode(mode);
+
+  if (screenId === 'subject') loadSubjectInfo(subjShort);
+  if (screenId === 'cgpa')    initCgpaEngine();
+  if (screenId === 'dsa')     initDSAForge();
+  if (screenId === 'study')   initStudyRoom();
+}
+
+function renderDashboard() {
+  const container = document.getElementById("dashboard-subjects");
+  container.innerHTML = "";
+  if(typeof getAllProgress !== 'function' || !SUBJECTS) return;
+  const stats = getAllProgress();
+  let totalDone = 0;
+  let totalTopics = 0;
+
+  SUBJECTS.forEach(sub => {
+    const stat = stats[sub.short] || {done:0, total:0, percentage:0, pending:0, highDone:0, highTotal:0};
+    totalDone += stat.done;
+    totalTopics += stat.total;
+    const percent = stat.percentage;
+
+    let col = "var(--color-primary)"; 
+    if (percent > 0 && percent < 100) col = "var(--color-warning)"; 
+    if (percent === 100 && percent !== 0) col = "var(--color-success)"; 
+
+    const div = document.createElement("div");
+    div.className = "card subject-card";
+    div.style.borderLeftColor = col;
+    div.innerHTML = `
+      <div>
+        <div class="flex justify-between items-start mb-2">
+          <h3 class="font-bold text-lg">${sub.name}</h3>
+          <span class="badge badge-blue">${sub.short}</span>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" style="width: ${percent}%; background-color: ${percent > 0 && percent < 100 ? 'var(--color-primary)' : col};"></div>
+        </div>
+        <div class="text-sm text-muted mb-4">
+          ${stat.done} topics done &middot; ${stat.pending} pending &middot; ${stat.highDone}/${stat.highTotal} high priority done
+        </div>
+      </div>
+      <div class="flex gap-2">
+        <button class="btn btn-outline" onclick="nav('subject', '${sub.short}')">View Subject</button>
+        <button class="btn btn-primary" onclick="quickStart('${sub.short}')">Quick Start &rarr;</button>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+
+  document.getElementById("stat-topics").textContent = `${totalDone}/${totalTopics}`;
+  const overPercent = totalTopics ? Math.round((totalDone/totalTopics)*100) : 0;
+  document.getElementById("stat-readiness").textContent = `${overPercent}%`;
+  document.getElementById("stat-subCount").textContent = SUBJECTS.length;
+}
+
+function renderSidebar() {
+  const container = document.getElementById("sidebar-subjects");
+  container.innerHTML = "";
+  if(!SUBJECTS) return;
+  SUBJECTS.forEach(sub => {
+    const div = document.createElement("div");
+    div.className = "quick-item";
+    div.innerHTML = `
+      <span style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;" onclick="nav('subject', '${sub.short}')">
+        <div class="dot" style="background: var(--color-primary);"></div>
+        ${sub.short}
+      </span>
+      <span class="badge badge-blue" style="font-size:0.6rem; padding: 0.1rem 0.4rem;">${sub.short}</span>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function escapeQuotes(str) {
+  return str.replace(/'/g, "'").replace(/"/g, '&quot;');
+}
+
+function loadSubjectInfo(short) {
+  if(!SUBJECTS) return;
+  const sub = SUBJECTS.find(s => s.short === short);
+  if(!sub) return;
+  document.getElementById("subj-breadcrumb").textContent = sub.name;
+  document.getElementById("subj-title").textContent = sub.name;
+  document.getElementById("subj-badge").textContent = short;
+
+  const prog = getProgress(short);
+  
+  let totalTopics = 0;
+  let doneCount = 0;
+  const tList = document.getElementById('subj-topics-list');
+  tList.innerHTML = '';
+  
+  sub.units.forEach(unit => {
+    tList.innerHTML += `<div class="text-xs text-muted mb-2 mt-6 font-bold uppercase" style="letter-spacing: 0.05em;">${unit.name}</div>`;
+    
+    if (unit.topics.length === 0) {
+      tList.innerHTML += `<div class="text-sm text-muted mb-4">No topics loaded for this unit.</div>`;
+    }
+    
+    unit.topics.forEach((t, i) => {
+      totalTopics++;
+      const isDone = !!prog[t.name];
+      if (isDone) doneCount++;
+      
+      const bColor = t.priority === 'HIGH' ? 'red' : t.priority === 'LOW' ? 'green' : 'amber';
+      const cColor = isDone ? 'var(--color-success)' : 'var(--text-muted)';
+      const cIcon = isDone ? 'check-circle' : 'circle';
+      const cStyles = isDone ? 'text-decoration: line-through; opacity: 0.7;' : '';
+      
+      tList.innerHTML += `
+        <div class="topic-row">
+          <div class="flex items-center gap-4">
+            <i data-lucide="${cIcon}" style="color: ${cColor}; width:18px; height:18px; cursor:pointer;" onclick="toggleTopicStatus('${short}', '${escapeQuotes(t.name)}')"></i>
+            <span class="font-semibold" style="${cStyles}">${t.name}</span>
+            <span class="badge badge-${bColor}">${t.priority}</span>
+          </div>
+          <button class="btn btn-outline" style="padding: 0.25rem 0.75rem;" onclick="nav('study', '${short}', '${escapeQuotes(t.name)}', 'teach')">Study</button>
+        </div>
+      `;
+    });
+  });
+  
+  lucide.createIcons();
+
+  document.getElementById('subj-topic-count').textContent = totalTopics;
+  document.getElementById('subj-done-count').textContent = doneCount;
+  document.getElementById('subj-pend-count').textContent = totalTopics - doneCount;
+  const pct = totalTopics ? Math.round((doneCount/totalTopics)*100) : 0;
+  document.getElementById('subj-circle-text').textContent = `${pct}%`;
+  document.getElementById('subj-circle').style.background = `conic-gradient(var(--color-primary) ${pct}%, #f3f4f6 0)`;
+}
+
+window.toggleTopicStatus = function(short, topicName) {
+  const prog = getProgress(short);
+  if (prog[topicName]) {
+    markPending(short, topicName);
+  } else {
+    markDone(short, topicName);
+  }
+  loadSubjectInfo(short);
+  renderDashboard();
+  renderProgressPage();
+}
+
+function renderProgressPage() {
+  const tbody = document.getElementById("progress-tbody");
+  if(!tbody) return;
+  tbody.innerHTML = "";
+  if(typeof getAllProgress !== 'function') return;
+  const stats = getAllProgress();
+  
+  SUBJECTS.forEach(sub => {
+    const stat = stats[sub.short] || {percentage:0, done:0, pending:0};
+    const pct = stat.percentage;
+    let pctClass = pct > 50 ? 'text-success' : 'text-warning';
+    if(pct === 0) pctClass = '';
+
+    tbody.innerHTML += `
+      <tr>
+        <td class="font-semibold">${sub.name} <span class="badge badge-blue ml-2">${sub.short}</span></td>
+        <td>
+          <div class="progress-bar-container" style="width: 150px; margin:0;">
+            <div class="progress-bar-fill" style="width: ${pct}%; background-color: var(--color-primary);"></div>
+          </div>
+        </td>
+        <td>${stat.done}</td>
+        <td>${stat.pending}</td>
+        <td class="font-bold" style="color: ${pct>50?'var(--color-success)':'var(--color-warning)'}">${pct}%</td>
+      </tr>
+    `;
+  });
+
+  const grid = document.getElementById("contrib-grid");
+  grid.innerHTML = "";
+  const cols = ['#f3f4f6', '#bfdbfe', '#3b82f6', '#1d4ed8'];
+  for(let i=0; i<28; i++) {
+    const d = document.createElement('div');
+    d.className = 'contrib-cell';
+    d.style.background = cols[Math.floor(Math.random()*cols.length)];
+    grid.appendChild(d);
+  }
+}
+
+function setMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  const tabs = Array.from(document.querySelectorAll('.tab'));
+  const idx = ['teach','quiz','boss','story'].indexOf(mode);
+  if(idx > -1) tabs[idx].classList.add('active');
+
+  const msgMap = {
+    story: "🎭 Ready to hear a story?",
+    quiz: "📝 Ready for a 5-question quiz?",
+    boss: "⚔️ Ready to fight the Boss?",
+    teach: "📖 Ready to learn?"
+  };
+
+  document.getElementById("study-msg").textContent = msgMap[mode] || msgMap['teach'];
+  document.getElementById("study-boss-ui").style.display = mode === 'boss' ? 'flex' : 'none';
+  if(mode === 'boss') {
+    document.getElementById("boss-hp-container").innerHTML = `
+BOSS - ${currentTopic} Overlord
+HP [████████████████████] 100/100
+
+YOU
+HP [████████████████████] 100/100`;
+  }
+
+  document.getElementById("study-chat").innerHTML = '';
+  document.getElementById("study-input").style.display = 'none';
+  
+  // If moving between modes while studying, auto-start new mode
+  if(currentTopic && mode !== 'quiz' && mode !== 'boss') {
+      startSession();
+  }
+}
+
+function quickStart(short) {
+  const sub = SUBJECTS.find(s => s.short === short);
+  if (!sub) return;
+  
+  // Flatten all topics to get syllabus order
+  const allTopics = [];
+  sub.units.forEach(u => u.topics.forEach(t => allTopics.push(t)));
+  
+  if (allTopics.length === 0) {
+    showToast("No topics found for this subject.");
+    return;
+  }
+
+  // Get current index from localStorage
+  const progData = JSON.parse(localStorage.getItem('studyos_meta') || '{}');
+  if(!progData[short]) progData[short] = { currentTopicIndex: 0 };
+  
+  let idx = progData[short].currentTopicIndex;
+  
+  // If current topic is already done, move to next
+  const subjectProg = getProgress(short);
+  while(idx < allTopics.length && subjectProg[allTopics[idx].name]) {
+    idx++;
+  }
+  
+  if (idx >= allTopics.length) {
+    showToast("Subject complete! Restarting from Topic 1.");
+    idx = 0;
+  }
+
+  // Save updated index
+  progData[short].currentTopicIndex = idx;
+  localStorage.setItem('studyos_meta', JSON.stringify(progData));
+
+  const targetTopic = allTopics[idx];
+  nav('study', short, targetTopic.name, 'teach');
+  startSession();
+}
+
+function initStudyRoom() {
+  document.getElementById("study-subj-name").textContent = currentSubject || "Subject";
+  document.getElementById("study-badge").textContent = currentSubject || "SHORT";
+  document.getElementById("study-topic-name").textContent = currentTopic || "Topic";
+  setMode(currentMode);
+}
+
+function markDoneFromStudy() {
+  if(typeof markDone === 'function' && currentSubject && currentTopic) {
+    markDone(currentSubject, currentTopic);
+    
+    // Increment index for next Quick Start
+    const progData = JSON.parse(localStorage.getItem('studyos_meta') || '{}');
+    if(progData[currentSubject]) {
+        progData[currentSubject].currentTopicIndex++;
+        localStorage.setItem('studyos_meta', JSON.stringify(progData));
+    }
+
+    loadSubjectInfo(currentSubject);
+    renderDashboard();
+    renderProgressPage();
+    showToast(`✅ ${currentTopic} marked as complete!`);
+    setTimeout(() => nav('subject', currentSubject), 1500);
+  }
+}
+
+function addAgentMsg(txt, isHtml=false) {
+  const div = document.createElement("div");
+  div.className = "msg agent";
+  if(isHtml) div.innerHTML = txt;
+  else div.innerHTML = txt.replace(/\n/g, '<br>');
+  document.getElementById("study-chat").appendChild(div);
+  document.getElementById("study-chat").scrollTop = document.getElementById("study-chat").scrollHeight;
+}
+
+// ---------------------------------
+// AI Integration Parsers and Loops
+// ---------------------------------
+
+async function startSession() {
+  const responseDiv = document.getElementById('study-response') 
+    || document.getElementById('response-box')
+    || document.getElementById('chat-output')
+    || document.querySelector('.response-area')
+    || document.querySelector('.chat-box');
+  
+  if (!responseDiv) {
+    console.error('Cannot find response div');
+    // Fallback UI handling
+    const chatBox = document.getElementById("study-chat");
+    if(chatBox) {
+        chatBox.style.display = 'flex';
+        document.getElementById("study-placeholder").style.display = 'none';
+        chatBox.innerHTML = '';
+        const msg = document.createElement("div");
+        msg.className = "msg agent";
+        chatBox.appendChild(msg);
+        streamToDiv(msg);
+    }
+    return;
+  }
+
+  // Proper UI setup if responseDiv was found but might be the chat-box itself
+  if(responseDiv.id === 'study-chat' || responseDiv.classList.contains('chat-box')) {
+      document.getElementById("study-placeholder").style.display = 'none';
+      responseDiv.style.display = 'flex';
+      responseDiv.innerHTML = '';
+      const msg = document.createElement("div");
+      msg.className = "msg agent";
+      responseDiv.appendChild(msg);
+      streamToDiv(msg);
+      return;
+  }
+
+  async function streamToDiv(target) {
+    const subject = window.currentSubject || document.getElementById('study-badge')?.textContent?.trim() || 'TOC';
+    const topic = window.currentTopic || document.getElementById('study-topic-name')?.textContent?.trim() || 'General';
+    const mode = window.currentMode || 'teach';
+
+    console.log('Calling /api/study with:', { subject, topic, mode });
+
+    target.textContent = 'Loading...';
+    target.style.cssText = 'white-space:pre-wrap;word-wrap:break-word;word-break:break-word;width:100%;display:block;font-size:15px;line-height:1.8;padding:20px;font-family:Inter,sans-serif;';
+
+    try {
+      const res = await fetch('/api/study', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ subject, topic, mode })
+      });
+
+      if (!res.ok) throw new Error('HTTP error! status: ' + res.status);
+
+      target.textContent = '';
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        target.textContent += decoder.decode(value, { stream: true });
+        const chat = document.getElementById("study-chat");
+        if(chat) chat.scrollTop = chat.scrollHeight;
+      }
+
+      // Finish standard mode if not quiz/boss
+      if (mode === 'quiz') parseQuiz(target.textContent, target);
+      else if (mode === 'boss') parseBoss(target.textContent, target);
+      else finishStandardMode(target);
+
+    } catch (err) {
+      console.error('Study Error:', err);
+      target.textContent = 'Error: ' + err.message;
+    }
+  }
+}
+
+function finishStandardMode(msgDiv) {
+  const btnDiv = document.createElement("div");
+  btnDiv.style.marginTop = "15px";
+  btnDiv.innerHTML = `<button class="btn btn-outline" style="margin-right:10px" onclick="setMode('quiz'); startSession()">Quiz Me Now</button> <button class="btn btn-primary" onclick="markDoneFromStudy()">Mark Done ✓</button>`;
+  document.getElementById("study-chat").appendChild(btnDiv);
+  document.getElementById("study-chat").scrollTop = document.getElementById("study-chat").scrollHeight;
+}
+
+function parseQuiz(raw, msgDiv) {
+  const s = raw.split('---ANSWERS---');
+  if(s.length < 2) return; // Silent fail or handle
+  
+  // Format the raw text slightly for readability before parsing questions
+  msgDiv.innerHTML = raw.replace(/\n/g, '<br>');
+  
+  const qMatches = [...s[0].matchAll(/Q(\d+):\s*(.*?)(?=(Q\d+:|$))/gs)];
+  const aMatches = [...s[1].matchAll(/A(\d+):\s*(.*?)(?=(A\d+:|$))/gs)];
+  
+  let questions = [];
+  for(let i=0; i<qMatches.length; i++) {
+      let t = qMatches[i][2].trim();
+      let typeM = t.match(/TYPE:\s*(.*)/i);
+      let optM = t.match(/OPTIONS:\s*(.*)/is);
+      
+      let ansMatch = aMatches.find(m => m[1] === qMatches[i][1]);
+      questions.push({
+          text: t.split(/TYPE:/i)[0].trim(),
+          type: typeM ? typeM[1].trim().split('\n')[0] : 'ONELINER',
+          options: optM ? optM[1].trim() : "",
+          answer: ansMatch ? ansMatch[2].trim() : ""
+      });
+  }
+  
+  currentQuizState = { questions, qIndex: 0, score: 0 };
+  renderQuizQuestion();
+}
+
+function renderQuizQuestion() {
+  const qs = currentQuizState;
+  const chat = document.getElementById("study-chat");
+  
+  if(qs.qIndex >= qs.questions.length) {
+      let msg = qs.score === qs.questions.length ? "PERFECT! Topic mastered!" : qs.score >= 3 ? "Good! Review weak points." : "Need more practice. Try again.";
+      addAgentMsg(`🏁 Quiz Finished! Score: ${qs.score}/${qs.questions.length}\n${msg}`, false);
+      const btnDiv = document.createElement("div");
+      btnDiv.innerHTML = `<button class="btn btn-outline" style="margin-right:10px" onclick="startSession()">Try Again</button> <button class="btn btn-primary" onclick="markDoneFromStudy()">Mark Done ✓</button>`;
+      chat.appendChild(btnDiv);
+      document.getElementById('study-input').style.display = 'none';
+      return;
+  }
+  
+  let q = qs.questions[qs.qIndex];
+  let html = `<b>Question ${qs.qIndex+1}/${qs.questions.length}</b><br>${q.text}`;
+  
+  if(q.type.includes('MCQ')) {
+      html += `<div style="margin-top:10px">
+        <button class="btn btn-outline" style="margin:2px" onclick="window.submitInput('A')">A</button>
+        <button class="btn btn-outline" style="margin:2px" onclick="window.submitInput('B')">B</button>
+        <button class="btn btn-outline" style="margin:2px" onclick="window.submitInput('C')">C</button>
+        <button class="btn btn-outline" style="margin:2px" onclick="window.submitInput('D')">D</button>
+      </div>`;
+      document.getElementById('study-input').style.display = 'none';
+  } else {
+      document.getElementById('study-input').style.display = 'flex';
+      document.getElementById('chat-msg').focus();
+  }
+  
+  addAgentMsg(html, true);
+}
+
+function parseBoss(raw, msgDiv) {
+  const s = raw.split('---ANSWERS---');
+  if(s.length < 2) return;
+
+  msgDiv.innerHTML = raw.replace(/\n/g, '<br>');
+  
+  const qMatches = [...s[0].matchAll(/Q(\d+):\s*(.*?)(?=(Q\d+:|$))/gs)];
+  const aMatches = [...s[1].matchAll(/A(\d+):\s*(.*?)(?=(A\d+:|$))/gs)];
+  
+  let questions = [];
+  for(let i=0; i<qMatches.length; i++) {
+      let ansMatch = aMatches.find(m => m[1] === qMatches[i][1]);
+      questions.push({
+          text: qMatches[i][2].trim(),
+          answer: ansMatch ? ansMatch[2].trim() : ""
+      });
+  }
+  
+  currentBossState = { questions, qIndex: 0, bossHP: 100, userHP: 100 };
+  document.getElementById("study-boss-ui").style.display = 'flex';
+  renderBossHP();
+  
+  document.getElementById('study-input').style.display = 'flex';
+  document.getElementById('chat-msg').focus();
+  renderBossQuestion();
+}
+
+function renderBossHP() {
+  const bs = currentBossState;
+  const b = Math.max(0, bs.bossHP);
+  const u = Math.max(0, bs.userHP);
+  document.getElementById('boss-hp-container').innerHTML = `
+BOSS - ${currentTopic} Overlord
+HP [${'█'.repeat(Math.round(b/5)).padEnd(20,' ')}] ${b}/100
+
+YOU
+HP [${'█'.repeat(Math.round(u/5)).padEnd(20,' ')}] ${u}/100`;
+}
+
+function renderBossQuestion() {
+  const bs = currentBossState;
+  if(bs.bossHP <= 0) {
+      addAgentMsg(`⚔️ VICTORY! ${currentTopic} DEFEATED!`, false);
+      const btnDiv = document.createElement("div");
+      btnDiv.innerHTML = `<button class="btn btn-primary" onclick="markDoneFromStudy()">Mark Done ✓</button>`;
+      document.getElementById("study-chat").appendChild(btnDiv);
+      document.getElementById('study-input').style.display = 'none';
+      return;
+  }
+  if(bs.userHP <= 0 || bs.qIndex >= bs.questions.length) {
+      addAgentMsg(`💀 DEFEATED! Study more and retry.`, false);
+      const btnDiv = document.createElement("div");
+      btnDiv.innerHTML = `<button class="btn btn-outline" onclick="startSession()">Try Again</button>`;
+      document.getElementById("study-chat").appendChild(btnDiv);
+      document.getElementById('study-input').style.display = 'none';
+      return;
+  }
+  
+  addAgentMsg(`⚔️ <b>Boss Attack:</b> ${bs.questions[bs.qIndex].text}`, true);
+}
+
+window.submitInput = function(val) {
+   let iv = val || document.getElementById('chat-msg').value;
+   if(!iv.trim()) return;
+   
+   const div = document.createElement("div");
+   div.className = "msg student";
+   div.textContent = iv;
+   document.getElementById("study-chat").appendChild(div);
+   
+   document.getElementById('chat-msg').value = '';
+   document.getElementById("study-chat").scrollTop = document.getElementById("study-chat").scrollHeight;
+   
+   if(currentMode === 'quiz') {
+       evalQuiz(iv);
+   } else if (currentMode === 'boss') {
+       evalBoss(iv);
+   }
+}
+
+function handleEnter(e) {
+  if (e.key === 'Enter') submitInput();
+}
+
+function evalQuiz(inputVal) {
+   const qs = currentQuizState;
+   let q = qs.questions[qs.qIndex];
+   
+   let ans = q.answer.toLowerCase();
+   let iv = inputVal.toLowerCase();
+   
+   let correct = false;
+   if(q.type.includes('MCQ')) {
+       correct = ans.startsWith(iv) || ans.includes(` ${iv})`) || ans.includes(`(${iv})`);
+       if(iv === 'a' && ans.includes('a)')) correct = true;
+       if(iv === 'b' && ans.includes('b)')) correct = true;
+       if(iv === 'c' && ans.includes('c)')) correct = true;
+       if(iv === 'd' && ans.includes('d)')) correct = true;
+   } else {
+       correct = iv.includes(ans) || ans.includes(iv);
+   }
+   
+   if(correct) {
+      qs.score++;
+      addAgentMsg(`✅ Correct! Answer: ${q.answer}`, false);
+   } else {
+      addAgentMsg(`❌ Wrong! Correct answer was: ${q.answer}`, false);
+   }
+   
+   qs.qIndex++;
+   setTimeout(renderQuizQuestion, 1000);
+}
+
+function evalBoss(inputVal) {
+   const bs = currentBossState;
+   let q = bs.questions[bs.qIndex];
+   
+   let ans = q.answer.toLowerCase();
+   let iv = inputVal.toLowerCase();
+   
+   let ansWords = ans.split(' ').filter(w=>w.length>3);
+   let matches = ansWords.filter(w=>iv.includes(w));
+   let correct = false;
+   if(ansWords.length>0 && matches.length >= ansWords.length/3) correct = true;
+   else if (iv.includes(ans) || ans.includes(iv)) correct = true;
+   
+   let bUi = document.getElementById('boss-hp-container');
+   if(correct) {
+      bs.bossHP -= 20;
+      addAgentMsg(`Boss: "Impossible! You know too much!"\n(Boss loses 20HP)`, false);
+      bUi.style.boxShadow = "0 0 20px #10b981";
+   } else {
+      bs.userHP -= 20;
+      addAgentMsg(`Boss: "Ha! Is that all you know?"\nCorrect was: ${q.answer}\n(You lose 20HP)`, false);
+      bUi.style.boxShadow = "0 0 20px #ef4444";
+   }
+   setTimeout(() => bUi.style.boxShadow = "none", 500);
+   
+   renderBossHP();
+   bs.qIndex++;
+   setTimeout(renderBossQuestion, 1500);
+}
+</script>
+<script src="js/cgpa.js"></script>
+<script src="js/dsa.js"></script>
+<script src="js/ideas.js"></script>
+<script src="js/knowledge.js"></script>
+
+<!-- ═════════════════════════════════════════════════════
+     IDEAS VAULT v2 — "The Neural Chamber" Fullscreen Overlay
+     Layer: z-0 canvas | z-1 grid | z-10 bars | z-20 capture | z-30 drawer | z-40 modal
+     ═════════════════════════════════════════════════════ -->
+<div id="ideas-overlay">
+
+  <!-- z-0: Particle Canvas -->
+  <canvas id="iv-canvas"></canvas>
+
+  <!-- z-10: Top Bar -->
+  <div class="iv-top-bar">
+    <button class="iv-back-btn" onclick="closeIdeasVault()">← Back to BOSS</button>
+    <div class="iv-title-group">
+      <h1>🧠 Neural Chamber</h1>
+    </div>
+    <span class="iv-topbar-stats" id="iv-topbar-stats"><strong>0</strong> ideas · <strong>0</strong> this week · <strong>0</strong>🔥</span>
+    <div class="iv-topbar-actions">
+      <button class="iv-search-btn" title="Search (Ctrl+K)" onclick="ivOpenSearch()">🔍</button>
+      <input id="iv-search-field" class="iv-search-field" placeholder="Search ideas, tags…"
+             oninput="ivSearch(this.value)" onkeydown="ivSearchKeydown(event)">
+      <div class="iv-view-toggle">
+        <button class="iv-view-btn active" data-view="grid" onclick="ivSetView('grid')">⊞ Grid</button>
+        <button class="iv-view-btn" data-view="brainmap" onclick="ivSetView('brainmap')">🧠 Map</button>
+      </div>
+      <button class="iv-new-btn" onclick="ivFocusCapture()">+ New</button>
+    </div>
+  </div>
+
+  <!-- z-10: Category Pills Bar -->
+  <div class="iv-cat-bar" id="iv-cat-bar"></div>
+
+  <!-- z-1: Card Grid (scrollable) -->
+  <div class="iv-card-grid" id="iv-card-grid"></div>
+
+  <!-- z-1: Brain Map (SVG, hidden by default) -->
+  <div class="iv-brainmap-wrap" id="iv-brainmap-wrap">
+    <svg id="iv-brainmap-svg"></svg>
+  </div>
+
+  <!-- z-20: Quick Capture Bar -->
+  <div class="iv-capture-bar">
+    <div class="iv-capture-meta" id="iv-capture-meta">
+      <span class="iv-capture-label">Category:</span>
+      <select class="iv-capture-select" id="iv-capture-cat">
+        <option value="random">⚡ Random</option>
+        <option value="build">🚀 Build</option>
+        <option value="learn">💡 Learn</option>
+        <option value="explore">🌍 Explore</option>
+        <option value="goals">🎯 Goals</option>
+        <option value="people">👥 People</option>
+        <option value="money">💰 Money</option>
+      </select>
+      <span class="iv-capture-label">Tags:</span>
+      <div class="iv-capture-tags-row" id="iv-captags-row">
+        <input class="iv-tag-inline-input" placeholder="#tag" onkeydown="ivCapTagKeydown(event)">
+      </div>
+      <button class="iv-capmeta-learn" onclick="ivLearnThisCapture()">📚 Learn This</button>
+    </div>
+    <div class="iv-capture-row">
+      <span class="iv-brain-icon">🧠</span>
+      <textarea id="iv-quick-input" class="iv-textarea"
+                placeholder="What's in your mind right now?"
+                rows="1"
+                oninput="ivCapInput(this)"
+                onkeydown="ivCapKeydown(event)"></textarea>
+      <button class="iv-send-btn" onclick="ivSaveIdea()" title="Ctrl+Enter to save">↑</button>
+    </div>
+    <div class="iv-shortcuts-hint">/ to capture · Ctrl+K to search · Ctrl+Enter to save</div>
+  </div>
+
+  <!-- z-25: Drawer Backdrop -->
+  <div class="iv-drawer-backdrop" id="iv-drawer-backdrop" onclick="ivBackdropClick()"></div>
+
+  <!-- z-30: Side Drawer -->
+  <div class="iv-side-drawer" id="iv-side-drawer">
+    <div id="iv-drawer-content"></div>
+  </div>
+
+  <!-- z-35: Node Tooltip (brain map) -->
+  <div class="iv-node-tooltip" id="iv-node-tooltip">
+    <div class="iv-node-tooltip-title"></div>
+    <div class="iv-node-tooltip-meta"></div>
+    <div class="iv-node-tooltip-content"></div>
+  </div>
+
+  <!-- z-40: Custom Category Modal -->
+  <div class="iv-modal-overlay" id="iv-cat-modal">
+    <div class="iv-modal-box">
+      <h3>New Category</h3>
+      <div class="iv-modal-field">
+        <div class="iv-modal-label">Emoji</div>
+        <input id="iv-cat-emoji" class="iv-modal-input" value="💫" maxlength="4" style="width:60px;">
+      </div>
+      <div class="iv-modal-field">
+        <div class="iv-modal-label">Name</div>
+        <input id="iv-cat-name" class="iv-modal-input" placeholder="e.g. Fitness">
+      </div>
+      <div class="iv-modal-field">
+        <div class="iv-modal-label">Color</div>
+        <div class="iv-color-swatches">
+          <div class="iv-color-swatch selected" style="background:#7C3AED;"></div>
+          <div class="iv-color-swatch" style="background:#06B6D4;"></div>
+          <div class="iv-color-swatch" style="background:#10B981;"></div>
+          <div class="iv-color-swatch" style="background:#F59E0B;"></div>
+          <div class="iv-color-swatch" style="background:#EF4444;"></div>
+          <div class="iv-color-swatch" style="background:#EC4899;"></div>
+          <div class="iv-color-swatch" style="background:#84CC16;"></div>
+          <div class="iv-color-swatch" style="background:#3B82F6;"></div>
+        </div>
+      </div>
+      <div class="iv-modal-footer">
+        <button class="iv-modal-cancel" onclick="ivCloseCatModal()">Cancel</button>
+        <button class="iv-modal-add" onclick="ivAddCustomCat()">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast (z-50) -->
+  <div id="iv-toast"></div>
+
+</div>
+
+
+<!-- ═════════════════════════════════════════════════════
+     KNOWLEDGE LOG — "The Codex" Fullscreen Overlay
+     ═════════════════════════════════════════════════════ -->
+<div id="knowledge-overlay">
+  <!-- Top Bar -->
+  <div class="kl-topbar">
+    <button class="kl-back-btn" onclick="closeKnowledgeLog()">← Back to BOSS</button>
+    <div class="kl-topbar-right">
+      <div class="kl-search-wrap">
+        <span>🔍</span>
+        <input class="kl-search-input" placeholder="Search entries..." oninput="klSearch(this.value)">
+      </div>
+      <button class="kl-btn kl-btn-primary" onclick="klOpenNewEntry()">+ Learn</button>
+    </div>
+  </div>
+
+  <!-- Brand Header -->
+  <div class="kl-header">
+    <div class="kl-header-inner">
+      <div class="kl-brand">
+        <h1>📚 The Codex</h1>
+        <p>Everything you've ever learned. Preserved forever.</p>
+      </div>
+      <div class="kl-streak-row" id="kl-header-stats"></div>
+    </div>
+  </div>
+
+  <!-- Domain Filter -->
+  <div class="kl-domain-bar" id="kl-domain-bar"></div>
+
+  <!-- Body: 2-column -->
+  <div class="kl-body">
+    <!-- Entry Feed -->
+    <div class="kl-feed" id="kl-feed-list"></div>
+
+    <!-- Sidebar -->
+    <div class="kl-sidebar">
+      <!-- Today -->
+      <div class="kl-sidebar-section">
+        <div class="kl-sidebar-heading">📅 Today</div>
+        <div id="kl-sidebar-today"></div>
+      </div>
+      <!-- Revise Today -->
+      <div class="kl-sidebar-section">
+        <div class="kl-sidebar-heading">⏰ Revise Today</div>
+        <div id="kl-sidebar-revise"></div>
+      </div>
+      <!-- Mastered -->
+      <div class="kl-sidebar-section">
+        <div class="kl-sidebar-heading">🏆 Mastered</div>
+        <div id="kl-sidebar-mastered"></div>
+      </div>
+      <!-- Domains -->
+      <div class="kl-sidebar-section">
+        <div class="kl-sidebar-heading">📊 Domains</div>
+        <div id="kl-sidebar-domains"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Entry Modal -->
+  <div id="kl-entry-modal">
+    <div id="kl-entry-box"></div>
+  </div>
+
+  <!-- Reading Modal -->
+  <div id="kl-reading-modal">
+    <div id="kl-reading-content"></div>
+  </div>
+
+  <!-- Toast -->
+  <div id="kl-toast"></div>
+</div>
+
+</body>
+</html>

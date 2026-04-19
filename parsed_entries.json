@@ -1,0 +1,215 @@
+[
+  {
+    "id": "35da2f19-7b6d-4c69-9cc6-69b5f2e7e212",
+    "title": "What is the AI Generalist Mindset?",
+    "domain": "Tech",
+    "tags": [
+      "#ai",
+      "#mindset",
+      "#generalist",
+      "#career"
+    ],
+    "content": {
+      "what_learned": "An AI Generalist is someone who can solve problems across MULTIPLE domains using AI — not just one specific area. Not just marketing, not just tech, not just data — all of them. Companies today are actively looking for this mindset. They're calling it: AI Generalist / AI Operator / AI Orchestrator — all mean the same thing.\n\nThe shift happening inside organizations: people will work alongside \"agentic clusters\" — groups of AI agents that each person creates and manages for themselves.",
+      "why_matters": "The people who master this will be irreplaceable. Specialists are being automated. Generalists who can direct AI across domains are being hired.",
+      "real_example": "Instead of hiring a separate person for research, a separate one for content, and another for data — one AI Generalist with the right tools can do all three. Weber's live demo showed a virtual executive assistant on WhatsApp/Slack doing research, analysis, and dropping executive summaries — all automated.",
+      "source": "C128 Generative AI Mastermind — Day 2 Recap"
+    },
+    "mastery_score": 4,
+    "status": "active",
+    "created_at": "2026-04-19T07:19:28.764Z",
+    "last_revised": null,
+    "revision_count": 0,
+    "revision_history": []
+  },
+  {
+    "id": "c7dcceb2-723a-4a75-a04a-dad6df73503d",
+    "title": "How Text Generation AI Actually Works — The 5-Step Process",
+    "domain": "Tech",
+    "tags": [
+      "#ai",
+      "#llm",
+      "#how-it-works",
+      "#fundamentals",
+      "#tokenization"
+    ],
+    "content": {
+      "what_learned": "When you send a prompt to ChatGPT, Claude, or any LLM — there is no magic. There is science. Here's what actually happens in 5 steps:\n\n**Step 1 — Tokenization:**\nYour entire input sentence is broken into \"tokens\" (chunks of words/characters). Tokens = the currency of AI models. Longer prompts = more tokens consumed. Output also consumes tokens.\n\n**Step 2 — Embedding:**\nThe tokens are converted into numerical vectors (numbers) so the computer can understand the meaning. Computers only understand binary (0s and 1s) — they can't read English directly.\n\n**Step 3 — Transformer Mechanism / Self-Attention:**\nThe model focuses on the most relevant parts of the input. It figures out which words/tokens matter most in the context of your prompt.\n\n**Step 4 — Next Word Prediction:**\nThe model predicts the next best word in the sequence, one at a time. This is how the entire response gets generated — word by word, probabilistically.\n\n**Step 5 — Output Generation:**\nThe full response is assembled and returned to you.",
+      "why_matters": "Understanding this kills the \"AI is magic\" illusion. It helps you write better prompts because you understand what the model is actually doing. Tokens = money — knowing this makes you more efficient with API costs.",
+      "real_example": "When you ask Claude \"summarize this document\" — it tokenizes your document, embeds it into vectors, uses self-attention to find the most important parts, then predicts words that form the best summary. It's pattern prediction, not understanding.",
+      "source": "C128 Generative AI Mastermind — Day 1 Recap (covered in Day 2)"
+    },
+    "mastery_score": 4,
+    "status": "active",
+    "created_at": "2026-04-19T07:19:28.765Z",
+    "last_revised": null,
+    "revision_count": 0,
+    "revision_history": []
+  },
+  {
+    "id": "c03224d4-31a0-4d80-a7ec-f912489514cd",
+    "title": "The Magic Prompt Formula — Role, Task, Instruction, Data",
+    "domain": "Tech",
+    "tags": [
+      "#prompting",
+      "#ai",
+      "#formula",
+      "#productivity",
+      "#beginner"
+    ],
+    "content": {
+      "what_learned": "Instead of learning 20 different prompting techniques, master this ONE structure first. It handles 80% of beginner use cases:\n\n```\nROLE        — Who should the AI be?\n              \"You are a senior software engineer...\"\n              \"You are a financial analyst...\"\n\nTASK        — What do you want it to do?\n              \"Analyze this data...\"\n              \"Write a cold email...\"\n\nINSTRUCTION — How should it do it?\n              \"Be concise. Use bullet points. Keep it under 200 words.\"\n              \"Think step by step. Show your reasoning.\"\n\nDATA        — What information does it need?\n              [paste the document / context / numbers here]\n```",
+      "why_matters": "Most people prompt with just a task. Adding role + instruction + data dramatically improves output quality. This is the difference between getting a generic answer and getting a precise, useful one.",
+      "real_example": "Bad prompt: \"Write me a LinkedIn post\"\nGood prompt: \"You are a LinkedIn content strategist for tech professionals. Write a LinkedIn post about AI tools for productivity. Keep it under 150 words, use a hook in the first line, and end with a question to drive engagement. My audience is software engineers aged 25-35.\"",
+      "source": "C128 Generative AI Mastermind — Day 1"
+    },
+    "mastery_score": 5,
+    "status": "active",
+    "created_at": "2026-04-19T07:19:28.765Z",
+    "last_revised": null,
+    "revision_count": 0,
+    "revision_history": []
+  },
+  {
+    "id": "4df19e4a-8804-4836-8914-13b099604f60",
+    "title": "The AI Generalist Toolkit — Key Tools to Know",
+    "domain": "Tech",
+    "tags": [
+      "#ai-tools",
+      "#toolkit",
+      "#productivity",
+      "#resources"
+    ],
+    "content": {
+      "what_learned": "Your AI toolkit is personal — build it around your daily use cases. But here are the tools covered in the Masterclass worth knowing:\n\n**Text / Chat Models:**\n- Claude (Anthropic) — best for reasoning, coding, long documents\n- Gemini (Google) — strong for research, integrates with Google ecosystem\n- ChatGPT (OpenAI) — widely used, strong general purpose\n\n**Research:**\n- Perplexity — best tool for deep research. Beats Gemini and ChatGPT for research tasks\n\n**Discovering Models:**\n- OpenRouter — 650+ AI models in one place. Browse, compare, test\n- GetMulti — run one prompt through 10 different AI models simultaneously. Great for comparison\n\n**Voice to Text:**\n- Whisper Flow (Flow by Whisper) — voice-to-text tool, used heavily in the session\n\n**Meeting Notes:**\n- Fireflies.AI — meeting notetaker. Key advantage = integrations with Slack, WhatsApp etc. Makes your Slack work like an executive assistant\n\n**Image / Product:**\n- Fort AI — product photoshoots using AI\n\n**Content / Social:**\n- SuperGrow — LinkedIn and organic social media content\n\n**Vibe Coding (Building Apps):**\n- Lovable — best for beginners, full-stack apps with natural language\n- Bolt — similar to Lovable\n- Emergent — another vibe coding tool\n- Replit — code + deploy in browser\n- Cursor — IDE with AI, more sophisticated than vibe coding tools\n- Claude Code — runs locally, builds more complex products",
+      "why_matters": "",
+      "real_example": "",
+      "source": "C128 Generative AI Mastermind — Day 1 + Day 2"
+    },
+    "mastery_score": 3,
+    "status": "active",
+    "created_at": "2026-04-19T07:19:28.765Z",
+    "last_revised": null,
+    "revision_count": 0,
+    "revision_history": []
+  },
+  {
+    "id": "2642d7d9-70cf-4619-8863-175475d8be30",
+    "title": "Vibe Coding — Building Full-Stack Apps Without Writing Code",
+    "domain": "Tech",
+    "tags": [
+      "#vibe-coding",
+      "#no-code",
+      "#lovable",
+      "#building",
+      "#web-dev"
+    ],
+    "content": {
+      "what_learned": "Vibe coding = building real, full-stack web applications using plain English prompts. No traditional coding required.\n\n**The 3 dimensions of any app you need to understand (even without coding them):**\n\n1. **User Experience (UX)** — Don't delegate this to AI. You must define what the app should feel like and how users move through it. AI can't know your user's psychology.\n\n2. **Front-end** — HTML, CSS, JavaScript. What the user sees and clicks. AI handles this.\n\n3. **Back-end** — APIs + databases. Where data is stored and fetched. AI handles this too with the right tools.\n\n**Live Demo — \"Pulse\" Finance App:**\nBuilt using Lovable. Process:\n- Used Perplexity for market research first\n- Described the app idea in plain English to Lovable\n- Got: AI money coach, goal tracking, gamification, rewards\n- Real-time database + user authentication built in\n- Published live\n\n**Tools hierarchy (beginner → advanced):**\n```\nLevel 1: Lovable, Bolt, Emergent  (natural language → full app)\nLevel 2: Replit                   (more control, still accessible)\nLevel 3: Cursor, Claude Code      (IDE-level, more sophisticated)\n```",
+      "why_matters": "You don't need to be a developer to build products anymore. The barrier is ideas + UX thinking — not coding. Claude Code specifically runs on your local system and can build complex products.",
+      "real_example": "Weber (presenter) built CRM platforms and internal company tools using vibe coding. What previously took a dev team weeks now takes hours.",
+      "source": "C128 Generative AI Mastermind — Day 2"
+    },
+    "mastery_score": 3,
+    "status": "active",
+    "created_at": "2026-04-19T07:19:28.765Z",
+    "last_revised": null,
+    "revision_count": 0,
+    "revision_history": []
+  },
+  {
+    "id": "07260eb8-06be-4086-8a6c-d88cb68c2d96",
+    "title": "The 5 Levels to Becoming an AI Generalist",
+    "domain": "Tech",
+    "tags": [
+      "#ai",
+      "#roadmap",
+      "#levels",
+      "#career",
+      "#learning-path"
+    ],
+    "content": {
+      "what_learned": "There is a specific progression to becoming an AI Generalist. Go from Level 1 → Level 5 in order. Do NOT start from Level 5.\n\n```\nLEVEL 1 — PROMPTING\n  Master prompting techniques deeply.\n  Start with the magic formula (Role, Task, Instruction, Data).\n  Then go into advanced prompting patterns.\n  This is the foundation everything else builds on.\n\nLEVEL 2 — MCPs (Model Context Protocols)\n  Connect AI models to real tools and platforms.\n  Example: Use Claude directly inside Zomato, Kite (trading app), or any platform.\n  MCPs let your LLM reach into external systems and take actions.\n  This is where AI stops being a chatbot and starts being an agent.\n\nLEVEL 3 — DIFFUSION MODELS\n  Image generation, video generation, audio generation.\n  Tools: Midjourney, DALL-E, Sora (note: Sora shutting down — ask why?)\n  Understanding how diffusion models work = understanding the visual AI space.\n\nLEVEL 4 — AI AUTOMATIONS & AGENTIC WORKFLOWS\n  Building workflows where multiple AI agents work together.\n  Example: research agent → writing agent → publishing agent, all connected.\n  This is where you build \"agentic clusters\" for yourself.\n\nLEVEL 5 — BUILDING PRODUCTS\n  Vibe coding. Building real apps without writing code from scratch.\n  Tools: Lovable → Cursor → Claude Code\n  This is the most advanced level — but meaningless without Levels 1-4.\n```",
+      "why_matters": "Most people jump to Level 5 (building apps) without mastering Level 1 (prompting). That's why their outputs are mediocre. The roadmap is sequential for a reason — each level multiplies the one before it.\n\n**The Roadmap Document:**\nOutSkill released a 31-page AI Generalist Roadmap (March 2026 version). It includes:\n- Current AI landscape as of March 2026\n- All major model releases (Feb-March 2026)\n- Model selection framework (how to choose which model for what)\n- Level-by-level resources from credible sources\n- Path from \"Cook\" stage → \"Orchestrator\" stage\n\nEstimated time to complete all 5 levels independently: 18–24 months.",
+      "real_example": "Sora (OpenAI video model) was shut down on March 24, 2026. The right question isn't \"so what?\" — it's WHY did they shut it down? Asking why × 3 reveals what's actually happening in the AI landscape. That questioning mindset is what separates a real AI generalist from a tool user.",
+      "source": "C128 Generative AI Mastermind — Day 2 closing segment"
+    },
+    "mastery_score": 4,
+    "status": "active",
+    "created_at": "2026-04-19T07:19:28.765Z",
+    "last_revised": null,
+    "revision_count": 0,
+    "revision_history": []
+  },
+  {
+    "id": "ed6a114c-14a1-4b31-9340-66c670b9a184",
+    "title": "Understanding Web Development Fundamentals (for Non-Developers)",
+    "domain": "Tech",
+    "tags": [
+      "#web-dev",
+      "#fundamentals",
+      "#frontend",
+      "#backend",
+      "#database"
+    ],
+    "content": {
+      "what_learned": "Even if you use vibe coding tools and never write a line of code yourself, you MUST understand the three layers of any web application:\n\n**Layer 1 — Front-End (What users see)**\n- Built with: HTML (structure), CSS (styling), JavaScript (interactivity)\n- This is everything visible: buttons, layouts, colors, animations\n- Vibe coding tools handle this automatically from your description\n\n**Layer 2 — Back-End (What happens behind the scenes)**\n- APIs: how the front-end talks to the database and external services\n- Databases: where all data is stored\n- Authentication: login systems, user accounts\n\n**Layer 3 — Database (Where data lives)**\n- Relational databases use SQL (Structured Query Language)\n- Data is stored in tables with rows and columns (like Excel, but more powerful)\n- Every app that stores user data has a database behind it",
+      "why_matters": "If you don't understand these layers, you can't give good instructions to vibe coding tools. You also can't debug when something breaks. Understanding the architecture = better prompts = better apps.",
+      "real_example": "When you log into Instagram — the front-end is what you see, the back-end checks your credentials against the database, the database returns your feed data, and the front-end displays it. Three layers working together in under 1 second.",
+      "source": "C128 Generative AI Mastermind — Day 2"
+    },
+    "mastery_score": 3,
+    "status": "active",
+    "created_at": "2026-04-19T07:19:28.765Z",
+    "last_revised": null,
+    "revision_count": 0,
+    "revision_history": []
+  },
+  {
+    "id": "ea225b59-3df1-4fe1-8955-46a0232fa73d",
+    "title": "MCPs — Model Context Protocols (AI Connected to Real Tools)",
+    "domain": "Tech",
+    "tags": [
+      "#mcp",
+      "#ai-agents",
+      "#integrations",
+      "#advanced",
+      "#claude"
+    ],
+    "content": {
+      "what_learned": "MCPs (Model Context Protocols) are what allow an LLM (like Claude) to connect to and interact with external platforms and tools in real time.\n\nWithout MCPs: Claude is a chatbot. You talk to it, it responds.\nWith MCPs: Claude can open your Zomato and order food. Claude can access your trading platform (Kite/Zerodha) and execute actions. Claude can read your calendar, send Slack messages, update your CRM.\n\nThis is Level 2 of the AI Generalist roadmap — and it's where AI stops being passive and starts being an agent that DOES things for you.\n\n**Examples shown in the masterclass:**\n- Weber integrated Claude with Zomato via MCP — ordered food directly from Claude\n- Integration with Zerodha Kite (stock trading app) via MCP\n- Fireflies.AI → Slack integration (meeting notes dropped automatically into Slack channels)",
+      "why_matters": "MCPs are the bridge between \"talking to AI\" and \"AI working for you.\" Once you understand MCPs, you can connect your AI to any tool in your workflow.",
+      "real_example": "Instead of: Check email → open CRM → update contact → send follow-up Slack message (4 steps, 10 minutes)\nWith MCP agent: \"Update the CRM for today's meeting with Sameer and send a follow-up on Slack\" — done in 10 seconds.",
+      "source": "C128 Generative AI Mastermind — Day 2"
+    },
+    "mastery_score": 2,
+    "status": "active",
+    "created_at": "2026-04-19T07:19:28.765Z",
+    "last_revised": null,
+    "revision_count": 0,
+    "revision_history": []
+  },
+  {
+    "id": "7b9fc127-cbf2-4e48-8002-cee239834048",
+    "title": "Perplexity — The Best AI Research Tool",
+    "domain": "Tech",
+    "tags": [
+      "#perplexity",
+      "#research",
+      "#ai-tools",
+      "#deep-research"
+    ],
+    "content": {
+      "what_learned": "Perplexity is the go-to tool for deep research tasks. It beats both Gemini and ChatGPT for research-specific use cases.\n\nKey advantage: Perplexity searches the web in real time and cites its sources. It doesn't rely only on training data — it pulls live information.\n\nUsed in the live demo to do market research before building the \"Pulse\" finance app:\n- Researched the Gen Z finance app market\n- Got competitor analysis\n- Identified feature gaps to target\n\nDeep research also exists in Gemini and ChatGPT — but Perplexity is specialized for this and generally outperforms both for research tasks.",
+      "why_matters": "Research used to take hours. Perplexity with the right prompt can produce a solid research brief in minutes with citations. For anyone building products, studying markets, or staying current with AI — this is a core tool.",
+      "real_example": "Before building any product: \"What are the top 5 finance apps targeting Gen Z in India? What are their key features, pain points users report, and pricing models?\" — Perplexity answers this with sources in under 2 minutes.",
+      "source": "C128 Generative AI Mastermind — Day 2"
+    },
+    "mastery_score": 4,
+    "status": "active",
+    "created_at": "2026-04-19T07:19:28.765Z",
+    "last_revised": null,
+    "revision_count": 0,
+    "revision_history": []
+  }
+]
