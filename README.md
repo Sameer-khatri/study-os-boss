@@ -17,27 +17,25 @@ BOSS is a local web application I built to fix how I study. Instead of scattered
 ### 📊 Dashboard
 Daily readiness score, exam countdown, subject progress, and topic completion tracking across all subjects.
 
-![CGPA Engine](uploads/Screenshot%20(630).png)
-
 ### 📈 CGPA Intelligence Engine
 First-principles CGPA analysis. Applies the Pareto 80/20 rule to identify your "Vital Few" subjects, runs a live CGPA simulator, and generates an automated action plan based on credit weights.
 
-![DSA Forge](uploads/Screenshot%20(631).png)
+![CGPA Engine](uploads/Screenshot%20(630).png)
 
 ### ⚔️ DSA Story Forge
 Log every problem as a battle. Capture your thinking process, where you got stuck, the aha moment, and a real-world connection. 22 pattern categories, spaced repetition, solve-level tracking (Warrior → Rebuilder), and a Pattern Arena radar chart. Not just code — the full story.
 
-![Neural Chamber](uploads/Screenshot%20(632).png)
+![DSA Forge](uploads/Screenshot%20(631).png)
 
 ### 🧠 Neural Chamber (Ideas Vault)
 Capture ideas the moment they appear. Animated neural particle background, masonry grid, brain map view, category filters, and a "Learn This" pipeline that sends ideas directly into The Codex.
 
-![The Codex](uploads/Screenshot%20(633).png)
+![Neural Chamber](uploads/Screenshot%20(632).png)
 
 ### 📚 The Codex
 A personal knowledge log with spaced repetition. Every concept gets a structured entry: What I Learned, Why It Matters, Real-World Example, Source. Mastery score (1–5) tracks retention. Gold shimmer on mastered entries. Daily streak counter.
 
-![Study Room](uploads/Screenshot%20(634).png)
+![The Codex](uploads/Screenshot%20(633).png)
 
 ### 🤖 Study Room
 AI-powered study modes via Groq (llama-3.3-70b-versatile) with streaming:
@@ -46,7 +44,7 @@ AI-powered study modes via Groq (llama-3.3-70b-versatile) with streaming:
 - **Boss Fight** — aggressive recall challenge
 - **Story** — concept explained as a narrative
 
----
+![Study Room](uploads/Screenshot%20(634).png)
 
 ## Tech Stack
 
